@@ -35,7 +35,7 @@ function handleCellClick(index) {
     if (checkWin()) {
         endGame(`Player ${currentPlayer} Wins!`);
         scores[currentPlayer]++;
-        HighlightWinningCells();
+        highlightWinningCells();
     } else if (checkTie()) {
         endGame(`It's a Tie!`);
         scores.tie++;
@@ -54,7 +54,7 @@ function updateCell(index) {
 }
 
 function checkWin() {
-    return winPatterns.some(patterns => {
+    return winPatterns.some(pattern => {
         const [a, b, c] = pattern;
         return board[a] && board[a] === board[b] && board[a] === board[c];
     })
@@ -64,7 +64,7 @@ function checkTie() {
     return board.every(cell => cell !== "");
 }
 
-function highlightingWinningCells() {
+function highlightWinningCells() {
     const winPattern = winPatterns.find(pattern => {
         const [a, b, c] = pattern;
         return board[a] && board[a] === board[b] && board[a] === board[c];
@@ -99,7 +99,7 @@ function resetGame() {
 }
 
 function resetScore() {
-    let scores = {
+    scores = {
         X: 0,
         O: 0,
         tie: 0
@@ -114,9 +114,9 @@ function updateDisplay() {
 }
 
 function updateScoreDisplay() {
-    scoreX.textContext = scores.X;
-    scoreO.textContext = scores.o;
-    scoreTie.textContext = scores.tie;
+    scoreX.textContent = scores.X;
+    scoreO.textContent = scores.O;
+    scoreTie.textContent = scores.tie;
 }
 
 function initializeGame() {
@@ -126,6 +126,8 @@ function initializeGame() {
 
     resetBtn.addEventListener('click', resetGame)
     resetScoreBtn.addEventListener('click', resetScore)
+
+    updateDisplay();
 }
 
 document.addEventListener('DOMContentLoaded', initializeGame);

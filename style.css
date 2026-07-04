@@ -6,13 +6,16 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: #1a1a1a;
     color: white;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: linear-gradient(rgba(26, 26, 26, 0.3), rgba(26, 26, 26, 0.8)), url("Xiaoyu-Posing.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .container {
@@ -25,23 +28,34 @@ body {
 h1 {
     font-size: 3rem;
     margin-bottom: 30px;
-    color: #00d4ff;
+    color: #ff9913;
     font-weight: 300;
     letter-spacing: 2px;
+    -webkit-text-stroke: 1.5px black;
+    text-shadow: 0 0 12px rgba(255,153,19,.5);
 }
 
 .game-info {
     margin-bottom: 30px;
 }
 
-.current-player{
+.current-player {
     font-size: 1.5rem;
     margin-bottom: 20px;
     color: white;
     transition: color 0.3s ease;
+     text-shadow:
+        -2px 0 #161616,
+         2px 0 #161616,
+         0 -2px #161616,
+         0 2px #161616,
+        -2px -2px #161616,
+         2px -2px #161616,
+        -2px 2px #161616,
+         2px 2px #161616;
 }
 
-.game-board{
+.game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 3px;
@@ -50,7 +64,7 @@ h1 {
     padding: 15px;
     border-radius: 12px;
     margin: 0 auto 30px;
-    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 145, 0, 0.2);
 }
 
 .cell {
@@ -86,18 +100,27 @@ h1 {
     color: #4ecdc4;
 }
 
-.cell.winner{
+.cell.winner {
     background: #333;
     animation: winner-glow 0.6s ease-in-out;
 }
 
 @keyframes winner-glow {
-    0% {transform: scale(1);}
-    50% {transform: scale(1.1); background: #555;}
-    100% {transform: scale(1);}
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        background: #555;
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-.controls{
+.controls {
     display: flex;
     gap: 20px;
     justify-content: center;
@@ -108,7 +131,7 @@ h1 {
     padding: 12px 24px;
     border: none;
     border-radius: 25px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -116,25 +139,31 @@ h1 {
     letter-spacing: 1px;
 }
 
-.btn-primary{
-    background: #00d4ff;
+.btn.active {
+    background: #ff9913;
     color: #1a1a1a;
 }
 
-.btn-primary:hover {
-    background: #00b8e6;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+.btn-primary {
+    background: transparent;
+    color: #ff9913;
+    border: 2px solid #ff9913;
 }
 
-.btn-secondary{
+.btn-primary:hover {
+    background: #ff9913;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
     background: transparent;
-    color: #00d4ff;
-    border: 2px solid #00d4ff;
+    color: #ff9913;
+    border: 2px solid #ff9913;
 }
 
 .btn-secondary:hover {
-    background: #00d4ff;
+    background: #ff9913;
     color: #1a1a1a;
     transform: translateY(-2px);
 }
@@ -148,17 +177,17 @@ h1 {
     justify-content: center;
 }
 
-.winner-message{
+.winner-message {
+    color: #ff9913;
+    font-weight: bold;
+}
+
+.tie-message {
     color: #00d4ff;
     font-weight: bold;
 }
 
-.tie-message{
-    color: #ffa500;
-    font-weight: bold;
-}
-
-.score-board{
+.score-board {
     display: flex;
     justify-content: space-around;
     margin-top: 30px;
@@ -179,34 +208,34 @@ h1 {
     letter-spacing: 1px;
 }
 
-.score-value{
+.score-value {
     font-size: 2rem;
     font-weight: bold;
 }
 
-.score.x .score-value{
+.score.x .score-value {
     color: #ff6b6b;
 }
 
-.score.o .score-value{
+.score.o .score-value {
     color: #4ecdc4;
 }
 
-.score.tie .score-value{
-    color: #ffa500;
+.score.tie .score-value {
+    color: #00d4ff;
 }
 
 @media (max-width: 480px) {
-    h1{
+    h1 {
         font-size: 2rem;
     }
 
-    .cell{
+    .cell {
         font-size: 2rem;
         min-height: 80px;
     }
 
-    .controls{
+    .controls {
         flex-direction: column;
         align-items: center;
     }

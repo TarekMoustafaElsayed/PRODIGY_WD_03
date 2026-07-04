@@ -15,12 +15,15 @@ const winPatterns = [
     [0, 4, 8], [2, 4, 6], //diagonals
 ]
 
+let cpuMode = false; // Adding CPU Mode to the game
+
 //DOM Elements
 const cells = document.querySelectorAll('.cell');
 const currentPlayerDisplay = document.getElementById('currentPlayer');
 const gameStatus = document.getElementById('gameStatus');
 const resetBtn = document.getElementById('resetBtn');
 const resetScoreBtn = document.getElementById('resetScoreBtn');
+const cpuBtn = document.getElementById('cpuBtn'); // Button to toggle CPU mode
 const scoreX = document.getElementById('scoreX');
 const scoreO = document.getElementById('scoreO');
 const scoreTie = document.getElementById('scoreTie');
@@ -28,6 +31,8 @@ const scoreTie = document.getElementById('scoreTie');
 //Event Handlers
 function handleCellClick(index) {
     if (!gameActive || board[index] !== '') return;
+
+    if (cpuMode && currentPlayer === 'O') return;
 
     board[index] = currentPlayer
     updateCell(index);
@@ -42,6 +47,10 @@ function handleCellClick(index) {
     } else {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
         updateDisplay();
+
+        if (cpuMode && currentPlayer === 'O') {
+            setTimeout(cpuMove, 500);
+        }
     }
 
     updateScoreDisplay();
@@ -126,8 +135,56 @@ function initializeGame() {
 
     resetBtn.addEventListener('click', resetGame)
     resetScoreBtn.addEventListener('click', resetScore)
+    cpuBtn.addEventListener("click", cpuModeActivation);
 
     updateDisplay();
+}
+
+function cpuModeActivation() {
+
+    cpuMode = !cpuMode;
+    cpuBtn.classList.toggle("active", cpuMode);
+    resetGame();
+    resetScore();
+}
+
+function cpuMove() {
+
+    if (!gameActive) return;
+    if (!cpuMode) return;
+
+    const availableMoves = [];
+
+    board.forEach((cell, index) => {
+        if (cell === '') {
+            availableMoves.push(index);
+        }
+    });
+
+    if (availableMoves.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * availableMoves.length);
+
+    const move = availableMoves[randomIndex];
+
+    board[move] = currentPlayer;
+    updateCell(move);
+
+    if (checkWin()) {
+        endGame(`Player ${currentPlayer} Wins!`);
+        scores[currentPlayer]++;
+        highlightWinningCells();
+    }
+    else if (checkTie()) {
+        endGame("It's a Tie!");
+        scores.tie++;
+    }
+    else {
+        currentPlayer = 'X';
+        updateDisplay();
+    }
+
+    updateScoreDisplay();
 }
 
 document.addEventListener('DOMContentLoaded', initializeGame);
